@@ -1762,7 +1762,7 @@ void idPlayer::Init()
 	weapon_soulcube			= SlotForWeapon( "weapon_soulcube" );
 	weapon_pda				= SlotForWeapon( "weapon_pda" );
 	weapon_fists			= SlotForWeapon( "weapon_fists" );
-	weapon_flashlight		= SlotForWeapon( "weapon_flashlight" );
+	//weapon_flashlight		= SlotForWeapon( "weapon_flashlight" );
 	weapon_chainsaw			= SlotForWeapon( "weapon_chainsaw" );
 	weapon_bloodstone		= SlotForWeapon( "weapon_bloodstone_passive" );
 	weapon_bloodstone_active1 = SlotForWeapon( "weapon_bloodstone_active1" );
@@ -1919,21 +1919,21 @@ void idPlayer::Init()
 	hipJoint = animator.GetJointHandle( value );
 	if( hipJoint == INVALID_JOINT )
 	{
-		gameLocal.Error( "Joint '%s' not found for 'bone_hips' on '%s'", value, name.c_str() );
+		gameLocal.Warning( "Joint '%s' not found for 'bone_hips' on '%s'", value, name.c_str() );
 	}
 
 	value = spawnArgs.GetString( "bone_chest", "" );
 	chestJoint = animator.GetJointHandle( value );
 	if( chestJoint == INVALID_JOINT )
 	{
-		gameLocal.Error( "Joint '%s' not found for 'bone_chest' on '%s'", value, name.c_str() );
+		gameLocal.Warning( "Joint '%s' not found for 'bone_chest' on '%s'", value, name.c_str() );
 	}
 
 	value = spawnArgs.GetString( "bone_head", "" );
 	headJoint = animator.GetJointHandle( value );
 	if( headJoint == INVALID_JOINT )
 	{
-		gameLocal.Error( "Joint '%s' not found for 'bone_head' on '%s'", value, name.c_str() );
+		gameLocal.Warning( "Joint '%s' not found for 'bone_head' on '%s'", value, name.c_str() );
 	}
 
 	// initialize the script variables
@@ -2344,7 +2344,7 @@ void idPlayer::Save( idSaveGame* savefile ) const
 	savefile->WriteInt( weapon_soulcube );
 	savefile->WriteInt( weapon_pda );
 	savefile->WriteInt( weapon_fists );
-	savefile->WriteInt( weapon_flashlight );
+	//savefile->WriteInt( weapon_flashlight );
 	savefile->WriteInt( weapon_chainsaw );
 	savefile->WriteInt( weapon_bloodstone );
 	savefile->WriteInt( weapon_bloodstone_active1 );
@@ -2635,7 +2635,7 @@ void idPlayer::Restore( idRestoreGame* savefile )
 	savefile->ReadInt( weapon_soulcube );
 	savefile->ReadInt( weapon_pda );
 	savefile->ReadInt( weapon_fists );
-	savefile->ReadInt( weapon_flashlight );
+	//savefile->ReadInt( weapon_flashlight );
 	savefile->ReadInt( weapon_chainsaw );
 	savefile->ReadInt( weapon_bloodstone );
 	savefile->ReadInt( weapon_bloodstone_active1 );
@@ -3545,7 +3545,7 @@ void idPlayer::DrawHUD( idMenuHandler_HUD* _hudManager )
 {
 	SCOPED_PROFILE_EVENT( "idPlayer::DrawHUD" );
 
-	if( !weapon.GetEntity() || influenceActive != INFLUENCE_NONE || privateCameraView || gameLocal.GetCamera() || !g_showHud.GetBool() )
+	//if( !weapon.GetEntity() || influenceActive != INFLUENCE_NONE || privateCameraView || gameLocal.GetCamera() || !g_showHud.GetBool() )
 	{
 		return;
 	}
@@ -5080,10 +5080,7 @@ void idPlayer::NextBestWeapon()
 	while( w > 0 )
 	{
 		w--;
-		if( w == weapon_flashlight )
-		{
-			continue;
-		}
+
 		weap = spawnArgs.GetString( va( "def_weapon%d", w ) );
 		if( !weap[ 0 ] || ( ( inventory.weapons & ( 1 << w ) ) == 0 ) || ( !inventory.HasAmmo( weap, true, this ) ) )
 		{
@@ -5247,10 +5244,6 @@ void idPlayer::SelectWeapon( int num, bool force )
 		return;
 	}
 
-	if( num == weapon_flashlight )
-	{
-		return;
-	}
 
 	if( ( num != weapon_pda ) && gameLocal.world->spawnArgs.GetBool( "no_Weapons" ) )
 	{
@@ -5818,7 +5811,10 @@ void idPlayer::UpdateWeapon()
 				ammoInClip = 0;
 			}
 			weapon.GetEntity()->GetWeaponDef( animPrefix, ammoInClip );
-			assert( weapon.GetEntity()->IsLinked() );
+			if (!(weapon.GetEntity()->IsLinked())) {
+				gameLocal.Warning("Weapon failed to link!\n");
+				return;
+			}
 		}
 		else
 		{
@@ -5867,123 +5863,7 @@ idPlayer::UpdateFlashLight
 */
 void idPlayer::UpdateFlashlight()
 {
-	if( idealWeapon == weapon_flashlight )
-	{
-		// force classic flashlight to go away
-		NextWeapon();
-	}
-
-	if( !flashlight.IsValid() )
-	{
-		return;
-	}
-
-	if( !flashlight.GetEntity()->GetOwner() )
-	{
-		return;
-	}
-
-	// Don't update the flashlight if dead in MP.
-	// Otherwise you can see a floating flashlight worldmodel near player's skeletons.
-	if( common->IsMultiplayer() )
-	{
-		if( health < 0 )
-		{
-			return;
-		}
-	}
-
-	// Flashlight has an infinite battery in multiplayer.
-	if( !common->IsMultiplayer() )
-	{
-		if( flashlight.GetEntity()->lightOn )
-		{
-			if( flashlight_batteryDrainTimeMS.GetInteger() > 0 )
-			{
-				flashlightBattery -= ( gameLocal.time - gameLocal.previousTime );
-				if( flashlightBattery < 0 )
-				{
-					FlashlightOff();
-					flashlightBattery = 0;
-				}
-			}
-		}
-		else
-		{
-			if( flashlightBattery < flashlight_batteryDrainTimeMS.GetInteger() )
-			{
-				flashlightBattery += ( gameLocal.time - gameLocal.previousTime ) * Max( 1, ( flashlight_batteryDrainTimeMS.GetInteger() / flashlight_batteryChargeTimeMS.GetInteger() ) );
-				if( flashlightBattery > flashlight_batteryDrainTimeMS.GetInteger() )
-				{
-					flashlightBattery = flashlight_batteryDrainTimeMS.GetInteger();
-				}
-			}
-		}
-	}
-
-	if( hud )
-	{
-		hud->UpdateFlashlight( this );
-	}
-
-	if( common->IsClient() )
-	{
-		// clients need to wait till the weapon and it's world model entity
-		// are present and synchronized ( weapon.worldModel idEntityPtr to idAnimatedEntity )
-		if( !flashlight.GetEntity()->IsWorldModelReady() )
-		{
-			return;
-		}
-	}
-
-	// always make sure the weapon is correctly setup before accessing it
-	if( !flashlight.GetEntity()->IsLinked() )
-	{
-		flashlight.GetEntity()->GetWeaponDef( "weapon_flashlight", 0 );
-		flashlight.GetEntity()->SetIsPlayerFlashlight( true );
-
-		// adjust position / orientation of flashlight
-		idAnimatedEntity* worldModel = flashlight.GetEntity()->GetWorldModel();
-		worldModel->BindToJoint( this, "Chest", true );
-		// Don't interpolate the flashlight world model in mp, let it bind like normal.
-		worldModel->SetUseClientInterpolation( false );
-
-		assert( flashlight.GetEntity()->IsLinked() );
-	}
-
-	// this positions the third person flashlight model! (as seen in the mirror)
-	idAnimatedEntity* worldModel = flashlight.GetEntity()->GetWorldModel();
-	static const idVec3 fl_pos = idVec3( 3.0f, 9.0f, 2.0f );
-	worldModel->GetPhysics()->SetOrigin( fl_pos );
-	static float fl_pitch = 0.0f;
-	static float fl_yaw = 0.0f;
-	static float fl_roll = 0.0f;
-	static idAngles ang = ang_zero;
-	ang.Set( fl_pitch, fl_yaw, fl_roll );
-	worldModel->GetPhysics()->SetAxis( ang.ToMat3() );
-
-	if( flashlight.GetEntity()->lightOn )
-	{
-		if( ( flashlightBattery < flashlight_batteryChargeTimeMS.GetInteger() / 2 ) && ( gameLocal.random.RandomFloat() < flashlight_batteryFlickerPercent.GetFloat() ) )
-		{
-			flashlight.GetEntity()->RemoveMuzzleFlashlight();
-		}
-		else
-		{
-			flashlight.GetEntity()->MuzzleFlashLight();
-		}
-	}
-
-	flashlight.GetEntity()->PresentWeapon( true );
-
-	if( gameLocal.world->spawnArgs.GetBool( "no_Weapons" ) || gameLocal.inCinematic || spectating || fl.hidden )
-	{
-		worldModel->Hide();
-	}
-	else
-	{
-		worldModel->Show();
-	}
+	
 }
 
 /*

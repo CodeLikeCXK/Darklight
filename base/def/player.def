@@ -1,0 +1,8 @@
+entityDef player_doommarine {
+  "spawnclass"   "idPlayer"
+  "scriptobject" "player"
+}
+
+entityDef player_doommarine_mp {
+  "inherit" "player_doommarine"
+}

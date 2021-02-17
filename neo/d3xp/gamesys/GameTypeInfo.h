@@ -4962,7 +4962,6 @@ static classVariableInfo_t idPlayer_typeInfo[] = {
 	{ "int", "weapon_soulcube", (intptr_t)(&((idPlayer *)0)->weapon_soulcube), sizeof( ((idPlayer *)0)->weapon_soulcube ) },
 	{ "int", "weapon_pda", (intptr_t)(&((idPlayer *)0)->weapon_pda), sizeof( ((idPlayer *)0)->weapon_pda ) },
 	{ "int", "weapon_fists", (intptr_t)(&((idPlayer *)0)->weapon_fists), sizeof( ((idPlayer *)0)->weapon_fists ) },
-	{ "int", "weapon_flashlight", (intptr_t)(&((idPlayer *)0)->weapon_flashlight), sizeof( ((idPlayer *)0)->weapon_flashlight ) },
 	{ "int", "weapon_chainsaw", (intptr_t)(&((idPlayer *)0)->weapon_chainsaw), sizeof( ((idPlayer *)0)->weapon_chainsaw ) },
 	{ "int", "weapon_bloodstone", (intptr_t)(&((idPlayer *)0)->weapon_bloodstone), sizeof( ((idPlayer *)0)->weapon_bloodstone ) },
 	{ "int", "weapon_bloodstone_active1", (intptr_t)(&((idPlayer *)0)->weapon_bloodstone_active1), sizeof( ((idPlayer *)0)->weapon_bloodstone_active1 ) },

@@ -39,7 +39,7 @@ If you have questions concerning this license or the applicable additional terms
 #define LAUNCH_TITLE_DOOM2_EXECUTABLE		"doom2.exe"
 
 idCVar com_wipeSeconds( "com_wipeSeconds", "1", CVAR_SYSTEM, "" );
-idCVar com_disableAutoSaves( "com_disableAutoSaves", "0", CVAR_SYSTEM | CVAR_BOOL, "" );
+idCVar com_disableAutoSaves( "com_disableAutoSaves", "1", CVAR_SYSTEM | CVAR_BOOL, "" );
 idCVar com_disableAllSaves( "com_disableAllSaves", "0", CVAR_SYSTEM | CVAR_BOOL, "" );
 
 

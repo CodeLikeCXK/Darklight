@@ -1,0 +1,9 @@
+// doom_main.script
+//
+
+#include "script/doom_defs.script"
+#include "script/doom_events.script"
+
+#include "script/ai_base.script"
+
+#include "script/player.script"

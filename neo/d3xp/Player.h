@@ -349,7 +349,7 @@ public:
 	int						weapon_soulcube;
 	int						weapon_pda;
 	int						weapon_fists;
-	int						weapon_flashlight;
+	//int						weapon_flashlight;
 	int						weapon_chainsaw;
 	int						weapon_bloodstone;
 	int						weapon_bloodstone_active1;

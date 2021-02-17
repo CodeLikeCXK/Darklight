@@ -1,0 +1,9 @@
+_default {
+  {
+    map textures/dummy_white.tga
+  }
+}
+
+_tracemodel {
+  collision
+}
