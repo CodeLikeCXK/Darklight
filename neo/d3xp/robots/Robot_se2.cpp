@@ -18,6 +18,7 @@ rvmRobotSE2::Init
 =================
 */
 void rvmRobotSE2::Init(void) {
+	Event_SetMoveType(MOVETYPE_FLY);
 }
 
 /*
@@ -34,8 +35,7 @@ void rvmRobotSE2::AI_Begin(void) {
 rvmRobotSE2::state_Begin
 =====================
 */
-stateResult_t rvmRobotSE2::state_Begin(stateParms_t* parms) {	
-	Event_SetMoveType(MOVETYPE_FLY);
+stateResult_t rvmRobotSE2::state_Begin(stateParms_t* parms) {		
 	Event_AnimState(ANIMCHANNEL_TORSO, "Torso_Idle", 8);	
 	Event_SetState("state_Idle");
 	return SRESULT_DONE;

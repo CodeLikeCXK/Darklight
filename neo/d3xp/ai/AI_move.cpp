@@ -336,29 +336,29 @@ idAI::SetAAS
 */
 void idAI::SetAAS()
 {
-	idStr use_aas;
-
-	spawnArgs.GetString("use_aas", NULL, use_aas);
-	aas = gameLocal.GetAAS(use_aas);
-	if (aas)
-	{
-		const idAASSettings* settings = aas->GetSettings();
-		if (settings)
-		{
-			if (!ValidForBounds(settings, physicsObj.GetBounds()))
-			{
-				gameLocal.Error("%s cannot use use_aas %s\n", name.c_str(), use_aas.c_str());
-			}
-			float height = settings->maxStepHeight;
-			physicsObj.SetMaxStepHeight(height);
-			return;
-		}
-		else
-		{
-			aas = NULL;
-		}
-	}
-	gameLocal.Printf("WARNING: %s has no AAS file\n", name.c_str());
+	//idStr use_aas;
+	//
+	//spawnArgs.GetString("use_aas", NULL, use_aas);
+	//aas = gameLocal.GetAAS(use_aas);
+	//if (aas)
+	//{
+	//	const idAASSettings* settings = aas->GetSettings();
+	//	if (settings)
+	//	{
+	//		if (!ValidForBounds(settings, physicsObj.GetBounds()))
+	//		{
+	//			gameLocal.Warning("%s cannot use use_aas %s\n", name.c_str(), use_aas.c_str());
+	//		}
+	//		float height = settings->maxStepHeight;
+	//		physicsObj.SetMaxStepHeight(height);
+	//		return;
+	//	}
+	//	else
+	//	{
+	//		aas = NULL;
+	//	}
+	//}
+	//gameLocal.Printf("WARNING: %s has no AAS file\n", name.c_str());
 }
 
 /*

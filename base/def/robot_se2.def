@@ -10,5 +10,6 @@ entityDef robot_se2 {
 	"spawnclass"					"rvmRobotSE2"
 	"scriptobject"					"robot_base"
 	"model"							"be2_model"
-	
+	"use_aas"						"aas96"
+	"health"						"35"
 }
