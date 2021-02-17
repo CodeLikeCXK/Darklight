@@ -1137,39 +1137,34 @@ void idAI::Spawn()
 	StopMove( MOVE_STATUS_DONE );
 
 	// Only AI that derives off of ai_monster_base can support native AI.
-	supportsNative = scriptObject.GetFunction("supports_native") != NULL;
+	stateThread.SetOwner(this);
+	Init();
 
-	if (supportsNative)
-	{
-		stateThread.SetOwner(this);
-		Init();
+	isAwake = false;
 
-		isAwake = false;
+	teleportType = GetIntKey("teleport");
+	triggerAnim = GetKey("trigger_anim");
 
-		teleportType = GetIntKey("teleport");
-		triggerAnim = GetKey("trigger_anim");
+	if (GetIntKey("spawner")) {
+		stateThread.SetState("state_Spawner");
+	}
 
-		if (GetIntKey("spawner")) {
-			stateThread.SetState("state_Spawner");
-		}
+	if (!GetIntKey("ignore_flashlight")) {
+		// allow waking up from the flashlight
+		Event_WakeOnFlashlight(true);
+	}
 
-		if (!GetIntKey("ignore_flashlight")) {
-			// allow waking up from the flashlight
-			Event_WakeOnFlashlight(true);
-		}
-
-		if (triggerAnim != "") {
-			stateThread.SetState("State_TriggerAnim");
-		}
-		else if (teleportType > 0) {
-			stateThread.SetState("State_TeleportTriggered");
-		}
-		else if (GetIntKey("hide")) {
-			stateThread.SetState("State_TriggerHidden");
-		}
-		else {
-			stateThread.SetState("State_WakeUp");
-		}
+	if (triggerAnim != "") {
+		stateThread.SetState("State_TriggerAnim");
+	}
+	else if (teleportType > 0) {
+		stateThread.SetState("State_TeleportTriggered");
+	}
+	else if (GetIntKey("hide")) {
+		stateThread.SetState("State_TriggerHidden");
+	}
+	else {
+		stateThread.SetState("State_WakeUp");
 	}
 
 	spawnArgs.GetBool( "spawnClearMoveables", "0", spawnClearMoveables );
@@ -1406,10 +1401,7 @@ void idAI::Think()
 
 	if( thinkFlags & TH_THINK )
 	{
-		if (supportsNative)
-		{
-			stateThread.Execute();
-		}
+		stateThread.Execute();
 
 		// clear out the enemy when he dies or is hidden
 		idActor* enemyEnt = enemy.GetEntity();

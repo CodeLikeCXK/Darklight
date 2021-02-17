@@ -1,3 +1,14 @@
 export Justin {
 	mesh models/md5/ships/be2/be2_spacecraft.fbx -dest models/md5/ships/be2/be2_spacecraft.md5mesh
 }
+
+model be2_model {
+	mesh models/md5/ships/be2/be2_spacecraft.md5mesh
+}
+
+entityDef robot_se2 {
+	"spawnclass"					"rvmRobotSE2"
+	"scriptobject"					"robot_base"
+	"model"							"be2_model"
+	
+}

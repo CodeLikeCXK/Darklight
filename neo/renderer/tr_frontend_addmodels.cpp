@@ -876,7 +876,7 @@ void R_AddSingleModel( viewEntity_t* vEntity )
 							// optionally cull the triangles to the light volume
 							// motorsep 11-09-2014; added && shader->SurfaceCastsShadow() per Lordhavoc's recommendation; should skip shadows calculation for surfaces with noShadows material flag
 							// when using shadow volumes
-							if( r_cullDynamicLightTriangles.GetBool() && !r_skipDynamicShadows.GetBool() && !r_useShadowMapping.GetBool() && shader->SurfaceCastsShadow() )
+							if( r_cullDynamicLightTriangles.GetBool() && !r_skipDynamicShadows.GetBool() && !tr.UseShadowMapping() && shader->SurfaceCastsShadow() )
 							{
 								vertCacheHandle_t lightIndexCache = vertexCache.AllocIndex( NULL, lightDrawSurf->numIndexes );
 								if( vertexCache.CacheIsCurrent( lightIndexCache ) )
@@ -967,7 +967,7 @@ void R_AddSingleModel( viewEntity_t* vEntity )
 			//--------------------------
 
 #if 1
-			if( !shader->SurfaceCastsShadow() && !( r_useShadowMapping.GetBool() && r_forceShadowMapsOnAlphaTestedSurfaces.GetBool() && shader->Coverage() == MC_PERFORATED ) )
+			if( !shader->SurfaceCastsShadow() && !( tr.UseShadowMapping() && r_forceShadowMapsOnAlphaTestedSurfaces.GetBool() && shader->Coverage() == MC_PERFORATED ) )
 			{
 				continue;
 			}
@@ -977,7 +977,7 @@ void R_AddSingleModel( viewEntity_t* vEntity )
 			// motorsep 11-08-2014; if r_forceShadowMapsOnAlphaTestedSurfaces is 0 when shadow mapping is on,
 			// don't render shadows from all alphaTest surfaces.
 			// Useful as global performance booster for old GPUs to disable shadows from grass/foliage/etc.
-			if( r_useShadowMapping.GetBool() )
+			if( tr.UseShadowMapping() )
 			{
 				if( shader->Coverage() == MC_PERFORATED )
 				{
@@ -995,7 +995,7 @@ void R_AddSingleModel( viewEntity_t* vEntity )
 				// check if a surface IS NOT alphaTested and has "noShadows" global key;
 				// or if a surface IS alphaTested and has "noShadows" global key;
 				// if either is true, don't make surfaces cast shadow maps.
-				if( r_useShadowMapping.GetBool() )
+				if( tr.UseShadowMapping() )
 				{
 					if( shader->Coverage() != MC_PERFORATED && shader->TestMaterialFlag( MF_NOSHADOWS ) )
 					{
@@ -1025,7 +1025,7 @@ void R_AddSingleModel( viewEntity_t* vEntity )
 			// if the static shadow does not have any shadows
 			if( surfInter != NULL && surfInter->numShadowIndexes == 0 )
 			{
-				if( !r_useShadowMapping.GetBool() )
+				if( !tr.UseShadowMapping() )
 				{
 					continue;
 				}
@@ -1045,7 +1045,7 @@ void R_AddSingleModel( viewEntity_t* vEntity )
 
 
 			// RB begin
-			if( r_useShadowMapping.GetBool() )
+			if( tr.UseShadowMapping() )
 			{
 				//if( addInteractions && surfaceDirectlyVisible && shader->ReceivesLighting() )
 				{
@@ -1148,7 +1148,7 @@ void R_AddSingleModel( viewEntity_t* vEntity )
 				shadowDrawSurf->scissorRect = vLight->scissorRect;		// default to the light scissor and light depth bounds
 				shadowDrawSurf->shadowVolumeState = SHADOWVOLUME_DONE;	// assume the shadow volume is done in case r_skipStaticShadows is set
 
-				if( !r_skipStaticShadows.GetBool() && !r_useShadowMapping.GetBool() )
+				if( !r_skipStaticShadows.GetBool() && !tr.UseShadowMapping() )
 				{
 					staticShadowVolumeParms_t* staticShadowParms = ( staticShadowVolumeParms_t* )R_FrameAlloc( sizeof( staticShadowParms[0] ), FRAME_ALLOC_SHADOW_VOLUME_PARMS );
 
@@ -1205,7 +1205,7 @@ void R_AddSingleModel( viewEntity_t* vEntity )
 				shadowDrawSurf->shadowVolumeState = SHADOWVOLUME_DONE;	// assume the shadow volume is done in case the index cache allocation failed
 
 				// if the index cache was successfully allocated then setup the parms to create a shadow volume in parallel
-				if( vertexCache.CacheIsCurrent( shadowDrawSurf->indexCache ) && !r_skipDynamicShadows.GetBool() && !r_useShadowMapping.GetBool() )
+				if( vertexCache.CacheIsCurrent( shadowDrawSurf->indexCache ) && !r_skipDynamicShadows.GetBool() && !tr.UseShadowMapping() )
 				{
 					// if the parms were not already allocated for culling interaction triangles to the light frustum
 					if( dynamicShadowParms == NULL )
@@ -1362,7 +1362,7 @@ void R_AddModels()
 	//-------------------------------------------------
 	// Kick off jobs to setup static and dynamic shadow volumes.
 	//-------------------------------------------------
-	if( ( r_skipStaticShadows.GetBool() && r_skipDynamicShadows.GetBool() ) || r_useShadowMapping.GetBool() )
+	if( ( r_skipStaticShadows.GetBool() && r_skipDynamicShadows.GetBool() ) || tr.UseShadowMapping() )
 	{
 		// no shadow volumes were chained to any entity, all are in DONE state, we don't need to Submit() or Wait()
 	}

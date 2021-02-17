@@ -2430,7 +2430,7 @@ See if some cvars that we watch have changed
 void idRenderBackend::CheckCVars()
 {
 	// TODO
-	if( r_useShadowMapping.GetBool() )
+	if( tr.UseShadowMapping() )
 	{
 		r_useShadowMapping.SetBool( false );
 	}

@@ -1404,7 +1404,7 @@ void idRenderBackend::DrawSingleInteraction( drawInteraction_t* din, bool useFas
 			}
 			else
 			{
-				if( r_useShadowMapping.GetBool() && din->vLight->globalShadows )
+				if( tr.UseShadowMapping() && din->vLight->globalShadows )
 				{
 					// RB: we have shadow mapping enabled and shadow maps so do a shadow compare
 
@@ -1472,7 +1472,7 @@ void idRenderBackend::DrawSingleInteraction( drawInteraction_t* din, bool useFas
 			}
 			else
 			{
-				if( r_useShadowMapping.GetBool() && din->vLight->globalShadows )
+				if( tr.UseShadowMapping() && din->vLight->globalShadows )
 				{
 					// RB: we have shadow mapping enabled and shadow maps so do a shadow compare
 
@@ -1673,7 +1673,7 @@ void idRenderBackend::RenderInteractions( const drawSurf_t* surfList, const view
 	bool lightDepthBoundsDisabled = false;
 
 	// RB begin
-	if( r_useShadowMapping.GetBool() )
+	if( tr.UseShadowMapping() )
 	{
 		const static int JITTER_SIZE = 128;
 
@@ -1762,7 +1762,7 @@ void idRenderBackend::RenderInteractions( const drawSurf_t* surfList, const view
 		GL_SelectTexture( INTERACTION_TEXUNIT_PROJECTION );
 		lightStage->texture.image->Bind();
 
-		if( r_useShadowMapping.GetBool() )
+		if( tr.UseShadowMapping() )
 		{
 			// texture 5 will be the shadow maps array
 			GL_SelectTexture( INTERACTION_TEXUNIT_SHADOWMAPS );
@@ -1884,7 +1884,7 @@ void idRenderBackend::RenderInteractions( const drawSurf_t* surfList, const view
 				SetVertexParm( RENDERPARM_LIGHTFALLOFF_S, lightProjection[3].ToFloatPtr() );
 
 				// RB begin
-				if( r_useShadowMapping.GetBool() )
+				if( tr.UseShadowMapping() )
 				{
 					if( vLight->parallel )
 					{
@@ -3501,7 +3501,7 @@ void idRenderBackend::DrawInteractions( const viewDef_t* _viewDef )
 
 	GL_SelectTexture( 0 );
 
-	const bool useLightDepthBounds = r_useLightDepthBounds.GetBool() && !r_useShadowMapping.GetBool();
+	const bool useLightDepthBounds = r_useLightDepthBounds.GetBool() && !tr.UseShadowMapping();
 
 	//
 	// for each light, perform shadowing and adding
@@ -3533,7 +3533,7 @@ void idRenderBackend::DrawInteractions( const viewDef_t* _viewDef )
 		}
 
 		// RB: shadow mapping
-		if( r_useShadowMapping.GetBool() )
+		if( tr.UseShadowMapping() )
 		{
 			int	side, sideStop;
 
@@ -3586,7 +3586,7 @@ void idRenderBackend::DrawInteractions( const viewDef_t* _viewDef )
 		else
 		{
 			// only need to clear the stencil buffer and perform stencil testing if there are shadows
-			const bool performStencilTest = ( vLight->globalShadows != NULL || vLight->localShadows != NULL ) && !r_useShadowMapping.GetBool();
+			const bool performStencilTest = ( vLight->globalShadows != NULL || vLight->localShadows != NULL ) && !tr.UseShadowMapping();
 
 			// mirror flips the sense of the stencil select, and I don't want to risk accidentally breaking it
 			// in the normal case, so simply disable the stencil select in the mirror case

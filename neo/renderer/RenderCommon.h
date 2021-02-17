@@ -868,6 +868,7 @@ public:
 
 	void					OnFrame();
 
+	bool					UseShadowMapping(void) { return true; }
 public:
 	// renderer globals
 	bool					registered;		// cleared at shutdown, set at InitOpenGL

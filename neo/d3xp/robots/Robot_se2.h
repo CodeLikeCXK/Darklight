@@ -1,10 +1,10 @@
-// Monster_demon_hellknight.h
+// Monster_flying_cacodemon.h
 //
 
 #pragma once
 
-class rvmMonsterDemonHellknight : public idAI {
-	CLASS_PROTOTYPE(rvmMonsterDemonHellknight);
+class rvmRobotSE2 : public idAI {
+	CLASS_PROTOTYPE(rvmRobotSE2);
 public:
 	virtual void				Init(void) override;
 	virtual void				AI_Begin(void) override;
@@ -14,11 +14,9 @@ public:
 private:
 	stateResult_t				state_Begin(stateParms_t* parms);
 	stateResult_t				state_Idle(stateParms_t* parms);
-	stateResult_t				combat_melee(stateParms_t* parms);
 	stateResult_t				combat_range(stateParms_t* parms);
 private:
-	float			nextAttack;
-	float			nextNoFOVAttack;
-	idEntity*		combat_node;
-	idScriptString	range_attack_anim;
+	float		nextAttack;
+	float		nextNoFOVAttack;
+	idEntity	*combat_node;
 };

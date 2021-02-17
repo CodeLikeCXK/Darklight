@@ -840,8 +840,6 @@ private:
 
 	float					attack_flags;
 
-	bool					supportsNative;
-
 	idStr					lastStateName;
 	stateParms_t			storedState;
 };
@@ -895,32 +893,6 @@ private:
 	stateResult_t state_talk_anim(stateParms_t* parms);
 };
 
-//
-// Bosses
-//
-#include "Monster_boss_vagary.h"
-
-//
-// Demons
-//
-#include "Monster_demon_hellknight.h"
-#include "Monster_demon_imp.h"
-
-//
-// Flying Monsters
-//
-#include "Monster_flying_lostsoul.h"
-#include "Monster_flying_cacodemon.h"
-
-//
-// Zombie Monsters
-//
-#include "Monster_zombie.h"
-#include "Monster_zombie_sawyer.h"
-#include "Monster_zombie_bernie.h"
-#include "Monster_zombie_morgue.h"
-#include "Monster_zombie_security_pistol.h"
-#include "Monster_zombie_commando_tentacle.h"
-#include "monster_zombie_commando_cgun.h"
+#include "../robots/Robot_se2.h"
 
 #endif /* !__AI_H__ */

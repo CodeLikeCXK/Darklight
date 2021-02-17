@@ -1,0 +1,62 @@
+// robot_base.script
+//
+
+object robot_base : ai {
+	float		customBlendOut;
+	
+	void		Torso_Idle();
+	void		Legs_Idle();
+	
+	void 		Torso_CustomCycle();
+	void 		Torso_CustomAnim();
+	
+	void playCustomCycle( string animname, float blendTime );
+	void playCustomAnim( string animname, float blendIn, float blendOut );
+};
+
+void robot_base::Torso_Idle() {
+
+}
+
+void robot_base::Legs_Idle() {
+
+}
+
+void robot_base::Torso_CustomCycle() {
+	eachFrame {
+		;
+	}
+}
+
+void robot_base::Torso_CustomAnim() {
+	while( !animDone( ANIMCHANNEL_TORSO, customBlendOut ) ) {
+		waitFrame();
+	}
+	
+	finishAction( "customAnim" );
+	animState( ANIMCHANNEL_TORSO, "Torso_Idle", customBlendOut );
+}
+
+
+/*
+=====================
+robot_base::playCustomCycle
+=====================
+*/
+void robot_base::playCustomCycle( string animname, float blendTime ) {
+	animState( ANIMCHANNEL_TORSO, "Torso_CustomCycle", blendTime );
+	overrideAnim( ANIMCHANNEL_LEGS );
+	playCycle( ANIMCHANNEL_TORSO, animname );
+}
+
+/*
+=====================
+robot_base::playCustomAnim
+=====================
+*/
+void robot_base::playCustomAnim( string animname, float blendIn, float blendOut ) {
+	customBlendOut = blendOut;
+	animState( ANIMCHANNEL_TORSO, "Torso_CustomAnim", blendIn );
+	overrideAnim( ANIMCHANNEL_LEGS );
+	playAnim( ANIMCHANNEL_TORSO, animname );
+}

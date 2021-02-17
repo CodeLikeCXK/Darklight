@@ -268,7 +268,7 @@ static void R_AddSingleLight( viewLight_t* vLight )
 		// RB: calculate shadow LOD similar to Q3A .md3 LOD code
 		vLight->shadowLOD = 0;
 
-		if( r_useShadowMapping.GetBool() && lightCastsShadows )
+		if( tr.UseShadowMapping() && lightCastsShadows )
 		{
 			float           flod, lodscale;
 			float           projectedRadius;
@@ -508,7 +508,7 @@ static void R_AddSingleLight( viewLight_t* vLight )
 	//--------------------------------------------
 	// add the prelight shadows for the static world geometry
 	//--------------------------------------------
-	if( light->parms.prelightModel != NULL && !r_useShadowMapping.GetBool() )
+	if( light->parms.prelightModel != NULL && !tr.UseShadowMapping() )
 	{
 		srfTriangles_t* tri = light->parms.prelightModel->Surface( 0 )->geometry;
 

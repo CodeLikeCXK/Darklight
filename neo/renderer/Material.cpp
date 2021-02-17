@@ -2369,7 +2369,7 @@ void idMaterial::ParseMaterial( idLexer& src )
 			// volume would be coplanar with the surface, giving depth fighting
 			// we could make this no-self-shadows, but it may be more important
 			// to receive shadows from no-self-shadow monsters
-			if( !r_useShadowMapping.GetBool() ) // motorsep 11-08-2014; when shadow mapping is on, we allow two-sided surfaces to cast shadows
+			if( !tr.UseShadowMapping() ) // motorsep 11-08-2014; when shadow mapping is on, we allow two-sided surfaces to cast shadows
 			{
 				SetMaterialFlag( MF_NOSHADOWS );
 			}

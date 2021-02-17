@@ -241,9 +241,9 @@ idCVar r_useVirtualScreenResolution( "r_useVirtualScreenResolution", "0", CVAR_R
 
 // RB: shadow mapping parameters
 #if defined( USE_VULKAN )
-	idCVar r_useShadowMapping( "r_useShadowMapping", "0", CVAR_RENDERER | CVAR_ROM | CVAR_STATIC | CVAR_INTEGER, "use shadow mapping instead of stencil shadows" );
+	idCVar r_useShadowMapping( "r_useShadowMapping", "1", CVAR_RENDERER | CVAR_ROM | CVAR_STATIC | CVAR_INTEGER, "use shadow mapping instead of stencil shadows" );
 #else
-	idCVar r_useShadowMapping( "r_useShadowMapping", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_INTEGER, "use shadow mapping instead of stencil shadows" );
+	idCVar r_useShadowMapping( "r_useShadowMapping", "1", CVAR_RENDERER | CVAR_ARCHIVE | CVAR_BOOL, "use shadow mapping instead of stencil shadows" );
 #endif
 idCVar r_shadowMapFrustumFOV( "r_shadowMapFrustumFOV", "92", CVAR_RENDERER | CVAR_FLOAT, "oversize FOV for point light side matching" );
 idCVar r_shadowMapSingleSide( "r_shadowMapSingleSide", "-1", CVAR_RENDERER | CVAR_INTEGER, "only draw a single side (0-5) of point lights" );
