@@ -1,7 +1,15 @@
-engine/default_lit
+textures/default_lit
 {
 	qer_editorimage textures/default_lit.tga
 	bumpmap			textures/default_lit.tga
 	diffusemap		textures/default_lit_normal.tga
 	specularmap		textures/default_lit_spec.tga
+}
+
+textures/engine/default_lit
+{
+    qer_editorimage textures/engine/default_lit.tga
+    diffusemap        textures/engine/default_lit.tga
+    bumpmap            textures/engine/default_lit_normal.tga
+    specularmap        textures/engine/default_lit_spec.tga
 }
