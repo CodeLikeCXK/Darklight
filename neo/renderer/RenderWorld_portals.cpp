@@ -237,26 +237,29 @@ void idRenderWorldLocal::AddAreaViewEntities( int areaNum, const portalStack_t* 
 		R_FreeEntityDefFadedDecals( entity, tr.viewDef->renderView.time[0] );
 
 		// check for completely suppressing the model
-		if( !r_skipSuppress.GetBool() )
+		if (!entity->parms.skipSuppress)
 		{
-			if( entity->parms.suppressSurfaceInViewID
-					&& entity->parms.suppressSurfaceInViewID == tr.viewDef->renderView.viewID )
+			if (!r_skipSuppress.GetBool())
 			{
-				continue;
+				if (entity->parms.suppressSurfaceInViewID
+					&& entity->parms.suppressSurfaceInViewID == tr.viewDef->renderView.viewID)
+				{
+					continue;
+				}
+				if (entity->parms.allowSurfaceInViewID
+					&& entity->parms.allowSurfaceInViewID != tr.viewDef->renderView.viewID)
+				{
+					continue;
+				}
 			}
-			if( entity->parms.allowSurfaceInViewID
-					&& entity->parms.allowSurfaceInViewID != tr.viewDef->renderView.viewID )
-			{
-				continue;
-			}
-		}
 
-		// cull reference bounds
-		if( CullEntityByPortals( entity, ps ) )
-		{
-			// we are culled out through this portal chain, but it might
-			// still be visible through others
-			continue;
+			// cull reference bounds
+			if (CullEntityByPortals(entity, ps))
+			{
+				// we are culled out through this portal chain, but it might
+				// still be visible through others
+				continue;
+			}
 		}
 
 		viewEntity_t* vEnt = R_SetEntityDefViewEntity( entity );

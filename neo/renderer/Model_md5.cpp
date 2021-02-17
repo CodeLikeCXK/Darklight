@@ -486,7 +486,7 @@ void TransformVertsAndTangents( idDrawVert* targetVerts, const int numVerts, con
 idMD5Mesh::UpdateSurface
 ====================
 */
-void idMD5Mesh::UpdateSurface( const struct renderEntity_s* ent, const idJointMat* entJoints,
+void idMD5Mesh::UpdateSurface( const struct renderEntity_t* ent, const idJointMat* entJoints,
 							   const idJointMat* entJointsInverted, modelSurface_t* surf )
 {
 
@@ -666,6 +666,30 @@ int idMD5Mesh::NearestJoint( int a, int b, int c ) const
 ***********************************************************************/
 
 /*
+=========================
+idRenderModelMD5::idRenderModelMD5
+=========================
+*/
+idRenderModelMD5::idRenderModelMD5() : idRenderModelStatic()
+{
+	poseMat = nullptr;
+}
+
+/*
+=========================
+idRenderModelMD5::idRenderModelMD5
+=========================
+*/
+idRenderModelMD5::~idRenderModelMD5()
+{
+	if (poseMat != nullptr)
+	{
+		Mem_Free16(poseMat);
+		poseMat = nullptr;
+	}
+}
+
+/*
 ====================
 idRenderModelMD5::ParseJoint
 ====================
@@ -770,6 +794,15 @@ bool idRenderModelMD5::LoadBinaryModel( idFile* file, const ID_TIME_T sourceTime
 	{
 		file->ReadBigArray( invertedDefaultPose[ i ].ToFloatPtr(), JOINTMAT_TYPESIZE );
 	}
+
+// jmarshall
+	poseMat = (idJointMat*)Mem_Alloc16(invertedDefaultPose.Num() * sizeof(*poseMat), TAG_RENDER_ENTITY);
+	memcpy(poseMat, &invertedDefaultPose[0], invertedDefaultPose.Num() * sizeof(*poseMat));
+	for (int i = 0; i < joints.Num(); i++) {
+		poseMat[i].Invert();
+	}
+// jmarshall end
+
 	SIMD_INIT_LAST_JOINT( invertedDefaultPose.Ptr(), joints.Num() );
 
 	file->ReadBig( tempNum );
@@ -1032,6 +1065,9 @@ void idRenderModelMD5::LoadModel()
 	joints.SetNum( num );
 	defaultPose.SetGranularity( 1 );
 	defaultPose.SetNum( num );
+// jmarshall
+	poseMat = (idJointMat*)Mem_Alloc16(num * sizeof(*poseMat), TAG_RENDER_ENTITY);
+// jmarshall end
 
 	// parse num meshes
 	parser.ExpectTokenString( "numMeshes" );
@@ -1048,7 +1084,6 @@ void idRenderModelMD5::LoadModel()
 	//
 	parser.ExpectTokenString( "joints" );
 	parser.ExpectTokenString( "{" );
-	idJointMat* poseMat = ( idJointMat* )_alloca16( joints.Num() * sizeof( poseMat[0] ) );
 	for( int i = 0; i < joints.Num(); i++ )
 	{
 		idMD5Joint* joint = &joints[i];
@@ -1334,7 +1369,7 @@ static void TransformJoints( idJointMat* __restrict outJoints, const int numJoin
 idRenderModelMD5::InstantiateDynamicModel
 ====================
 */
-idRenderModel* idRenderModelMD5::InstantiateDynamicModel( const struct renderEntity_s* ent, const viewDef_t* view, idRenderModel* cachedModel )
+idRenderModel* idRenderModelMD5::InstantiateDynamicModel( const struct renderEntity_t* ent, const viewDef_t* view, idRenderModel* cachedModel )
 {
 	if( cachedModel != NULL && !r_useCachedDynamicModels.GetBool() )
 	{
@@ -1348,13 +1383,7 @@ idRenderModel* idRenderModelMD5::InstantiateDynamicModel( const struct renderEnt
 		LoadModel();
 	}
 
-	if( !ent->joints )
-	{
-		common->Printf( "idRenderModelMD5::InstantiateDynamicModel: NULL joints on renderEntity for '%s'\n", Name() );
-		delete cachedModel;
-		return NULL;
-	}
-	else if( ent->numJoints != joints.Num() )
+	if( ent->joints && ent->numJoints != joints.Num() )
 	{
 		common->Printf( "idRenderModelMD5::InstantiateDynamicModel: renderEntity has different number of joints than model for '%s'\n", Name() );
 		delete cachedModel;
@@ -1407,7 +1436,14 @@ idRenderModel* idRenderModelMD5::InstantiateDynamicModel( const struct renderEnt
 		assert( staticModel->numInvertedJoints == numInvertedJoints );
 	}
 
-	TransformJoints( staticModel->jointsInverted, joints.Num(), ent->joints, invertedDefaultPose.Ptr() );
+	if (ent->joints == NULL)
+	{
+		TransformJoints(staticModel->jointsInverted, joints.Num(), poseMat, invertedDefaultPose.Ptr());
+	}
+	else
+	{
+		TransformJoints(staticModel->jointsInverted, joints.Num(), ent->joints, invertedDefaultPose.Ptr());
+	}
 
 	// create all the surfaces
 	idMD5Mesh* mesh = meshes.Ptr();
@@ -1442,7 +1478,14 @@ idRenderModel* idRenderModelMD5::InstantiateDynamicModel( const struct renderEnt
 			surf->id = i;
 		}
 
-		mesh->UpdateSurface( ent, ent->joints, staticModel->jointsInverted, surf );
+		if (ent->joints == NULL)
+		{
+			mesh->UpdateSurface(ent, poseMat, staticModel->jointsInverted, surf);
+		}
+		else
+		{
+			mesh->UpdateSurface(ent, ent->joints, staticModel->jointsInverted, surf);
+		}
 		assert( surf->geometry != NULL );	// to get around compiler warning
 
 		// the deformation of the tangents can be deferred until each surface is added to the view

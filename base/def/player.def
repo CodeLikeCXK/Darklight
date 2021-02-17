@@ -1,6 +1,8 @@
 entityDef player_doommarine {
   "spawnclass"   "idPlayer"
   "scriptobject" "player"
+  
+  "cockpit_model" "models/md5/cockpit/cockpit.md5mesh"
 }
 
 entityDef player_doommarine_mp {

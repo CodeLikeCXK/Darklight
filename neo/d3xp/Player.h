@@ -450,6 +450,7 @@ public:
 
 	virtual void			Hide();
 	virtual void			Show();
+	virtual void			Present();
 
 	void					Init();
 	void					PrepareForRestart();
@@ -911,6 +912,9 @@ private:
 	bool					isTelefragged;			// proper obituaries
 	int						serverOverridePositionTime;
 	int						clientFireCount;
+
+	idRenderModel			*cockpit_model;
+	int						cockpit_model_handle;
 
 	idPlayerIcon			playerIcon;
 

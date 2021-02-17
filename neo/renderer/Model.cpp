@@ -1025,7 +1025,7 @@ bool idRenderModelStatic::IsReloadable() const
 idRenderModelStatic::Bounds
 ================
 */
-idBounds idRenderModelStatic::Bounds( const struct renderEntity_s* mdef ) const
+idBounds idRenderModelStatic::Bounds( const struct renderEntity_t* mdef ) const
 {
 	return bounds;
 }
@@ -1045,7 +1045,7 @@ float idRenderModelStatic::DepthHack() const
 idRenderModelStatic::InstantiateDynamicModel
 ================
 */
-idRenderModel* idRenderModelStatic::InstantiateDynamicModel( const struct renderEntity_s* ent, const viewDef_t* view, idRenderModel* cachedModel )
+idRenderModel* idRenderModelStatic::InstantiateDynamicModel( const struct renderEntity_t* ent, const viewDef_t* view, idRenderModel* cachedModel )
 {
 	if( cachedModel )
 	{

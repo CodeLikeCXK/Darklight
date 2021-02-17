@@ -138,7 +138,7 @@ void idItem::Restore( idRestoreGame* savefile )
 idItem::UpdateRenderEntity
 ================
 */
-bool idItem::UpdateRenderEntity( renderEntity_s* renderEntity, const renderView_t* renderView ) const
+bool idItem::UpdateRenderEntity( renderEntity_t* renderEntity, const renderView_t* renderView ) const
 {
 
 	if( lastRenderViewTime == renderView->time[timeGroup] )

@@ -5113,6 +5113,8 @@ static classVariableInfo_t idPlayer_typeInfo[] = {
 	{ "bool", "isTelefragged", (intptr_t)(&((idPlayer *)0)->isTelefragged), sizeof( ((idPlayer *)0)->isTelefragged ) },
 	{ "int", "serverOverridePositionTime", (intptr_t)(&((idPlayer *)0)->serverOverridePositionTime), sizeof( ((idPlayer *)0)->serverOverridePositionTime ) },
 	{ "int", "clientFireCount", (intptr_t)(&((idPlayer *)0)->clientFireCount), sizeof( ((idPlayer *)0)->clientFireCount ) },
+	{ "idRenderModel *", "cockpit_model", (intptr_t)(&((idPlayer *)0)->cockpit_model), sizeof( ((idPlayer *)0)->cockpit_model ) },
+	{ "int", "cockpit_model_handle", (intptr_t)(&((idPlayer *)0)->cockpit_model_handle), sizeof( ((idPlayer *)0)->cockpit_model_handle ) },
 	{ "idPlayerIcon", "playerIcon", (intptr_t)(&((idPlayer *)0)->playerIcon), sizeof( ((idPlayer *)0)->playerIcon ) },
 	{ "bool", "selfSmooth", (intptr_t)(&((idPlayer *)0)->selfSmooth), sizeof( ((idPlayer *)0)->selfSmooth ) },
 	{ "netBoolEvent_t", "respawn_netEvent", (intptr_t)(&((idPlayer *)0)->respawn_netEvent), sizeof( ((idPlayer *)0)->respawn_netEvent ) },

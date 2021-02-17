@@ -61,6 +61,8 @@ idCVar pm_clientInterpolation_Divergence( "pm_clientInterpolation_Divergence", "
 
 idCVar pm_clientAuthoritative_minSpeedSquared( "pm_clientAuthoritative_minSpeedSquared", "1000.0f", CVAR_FLOAT, "" );
 
+idCVar g_cockpitZOffset("g_cockpitZOffset", "47", CVAR_FLOAT, "");
+
 extern idCVar g_demoMode;
 
 /*
@@ -1993,6 +1995,32 @@ void idPlayer::Init()
 
 	aimAssist.Init( this );
 }
+/*
+==============
+idPlayer::Present
+==============
+*/
+void idPlayer::Present() {
+	idActor::Present();
+
+	// also add a highlight shell model
+	renderEntity_t	cockpitRenderEntity;
+
+	cockpitRenderEntity = renderEntity;
+	cockpitRenderEntity.origin.z += g_cockpitZOffset.GetFloat();
+	cockpitRenderEntity.hModel = cockpit_model;
+	cockpitRenderEntity.bounds = cockpit_model->Bounds();
+	cockpitRenderEntity.skipSuppress = true;
+	
+	if (cockpit_model_handle == -1)
+	{
+		cockpit_model_handle = gameRenderWorld->AddEntityDef(&cockpitRenderEntity);
+	}
+	else
+	{
+		gameRenderWorld->UpdateEntityDef(cockpit_model_handle, &cockpitRenderEntity);
+	}
+}
 
 /*
 ==============
@@ -2020,6 +2048,9 @@ void idPlayer::Spawn()
 		// do this before SetClipModel to get the right bounding box
 		spectating = true;
 	}
+
+	cockpit_model_handle = 1;
+	cockpit_model = renderModelManager->FindModel(spawnArgs.GetString("cockpit_model"));
 
 	// set our collision model
 	physicsObj.SetSelf( this );

@@ -344,7 +344,7 @@ void idBrittleFracture::RemoveShard( int index )
 idBrittleFracture::UpdateRenderEntity
 ================
 */
-bool idBrittleFracture::UpdateRenderEntity( renderEntity_s* renderEntity, const renderView_t* renderView ) const
+bool idBrittleFracture::UpdateRenderEntity( renderEntity_t* renderEntity, const renderView_t* renderView ) const
 {
 	int i, j, k, n, msec, numTris, numDecalTris;
 	float fade;
@@ -540,7 +540,7 @@ bool idBrittleFracture::UpdateRenderEntity( renderEntity_s* renderEntity, const 
 idBrittleFracture::ModelCallback
 ================
 */
-bool idBrittleFracture::ModelCallback( renderEntity_s* renderEntity, const renderView_t* renderView )
+bool idBrittleFracture::ModelCallback( renderEntity_t* renderEntity, const renderView_t* renderView )
 {
 	const idBrittleFracture* ent;
 

@@ -5136,6 +5136,10 @@ intptr_t idPlayer::Invoke(const char *functionName, void *param1) {
 		Show();
 		return 0;
 	};
+	if(functionNameHash == 90014) { // Present
+		Present();
+		return 0;
+	};
 	if(functionNameHash == 48744) { // Init
 		Init();
 		return 0;
@@ -5688,6 +5692,9 @@ bool idPlayer::HasNativeFunction(const char *functionName) {
 		return true;
 	};
 	if(functionNameHash == 50306) { // Show
+		return true;
+	};
+	if(functionNameHash == 90014) { // Present
 		return true;
 	};
 	if(functionNameHash == 48744) { // Init
