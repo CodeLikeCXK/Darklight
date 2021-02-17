@@ -1,0 +1,3 @@
+export Justin {
+	mesh models/md5/ships/be2/be2_spacecraft.fbx -dest models/md5/ships/be2/be2_spacecraft.md5mesh
+}
