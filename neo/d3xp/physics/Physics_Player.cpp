@@ -512,7 +512,7 @@ void idPhysics_Player::Friction()
 	drop = 0;
 
 	// spectator friction
-	if( current.movementType == PM_SPECTATOR )
+	if( current.movementType == PM_SPECTATOR || current.movementType == PM_NORMAL)
 	{
 		drop += speed * PM_FLYFRICTION * frametime;
 	}
@@ -1533,7 +1533,7 @@ void idPhysics_Player::MovePlayer( int msec )
 	viewRight.Normalize();
 
 	// fly in spectator mode
-	if( current.movementType == PM_SPECTATOR )
+	if( current.movementType == PM_SPECTATOR || current.movementType == PM_NORMAL )
 	{
 		SpectatorMove();
 		idPhysics_Player::DropTimers();
