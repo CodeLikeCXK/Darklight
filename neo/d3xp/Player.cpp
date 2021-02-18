@@ -1993,6 +1993,29 @@ void idPlayer::Init()
 
 	aimAssist.Init( this );
 }
+
+/*
+==============
+idPlayer::RenderCockpit
+==============
+*/
+void idPlayer::RenderCockpit(void) {
+	// also add a highlight shell model
+	cockpit_render_entity.re = renderEntity;
+	cockpit_render_entity.re.axis = viewAngles.ToMat3();
+
+	idVec3 offset = cockpit_joint_offset;
+	offset.z = -offset.z;
+
+	cockpit_render_entity.re.origin = firstPersonViewOrigin + (offset * cockpit_render_entity.re.axis);
+
+	cockpit_render_entity.re.hModel = cockpit_model;
+	cockpit_render_entity.re.bounds = cockpit_model->Bounds();
+	cockpit_render_entity.re.skipSuppress = true;
+
+	cockpit_render_entity.Update();
+}
+
 /*
 ==============
 idPlayer::Present
@@ -2001,29 +2024,7 @@ idPlayer::Present
 void idPlayer::Present() {
 	idActor::Present();
 
-	// also add a highlight shell model
-	renderEntity_t	cockpitRenderEntity;
-
-	cockpitRenderEntity = renderEntity;
-	cockpitRenderEntity.axis = viewAngles.ToMat3();
-
-	idVec3 offset = cockpit_joint_offset;
-	offset.z = -offset.z;
-
-	cockpitRenderEntity.origin = firstPersonViewOrigin  + (offset * cockpitRenderEntity.axis);
-
-	cockpitRenderEntity.hModel = cockpit_model;
-	cockpitRenderEntity.bounds = cockpit_model->Bounds();
-	cockpitRenderEntity.skipSuppress = true;
-	
-	if (cockpit_model_handle == -1)
-	{
-		cockpit_model_handle = gameRenderWorld->AddEntityDef(&cockpitRenderEntity);
-	}
-	else
-	{
-		gameRenderWorld->UpdateEntityDef(cockpit_model_handle, &cockpitRenderEntity);
-	}
+	RenderCockpit();
 }
 
 /*
@@ -2057,7 +2058,6 @@ void idPlayer::Spawn()
 	jointHandle_t jointHandle = cockpit_model->GetJointHandle("player_view");
 	cockpit_joint_offset = cockpit_model->GetDefaultPose()[jointHandle].t;
 	cockpit_joint_offset = idVec3(cockpit_joint_offset.z, cockpit_joint_offset.y, cockpit_joint_offset.x);
-	cockpit_model_handle = -1;	
 
 	// set our collision model
 	physicsObj.SetSelf( this );

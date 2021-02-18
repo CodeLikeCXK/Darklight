@@ -481,4 +481,34 @@ public:
 	virtual void			DrawText( const char* text, const idVec3& origin, float scale, const idVec4& color, const idMat3& viewAxis, const int align = 1, const int lifetime = 0, bool depthTest = false ) = 0;
 };
 
+// jmarshall
+class rvmRenderEntity {
+public:
+	rvmRenderEntity();
+
+	renderEntity_t			re;
+	
+	void					Update();
+private:
+	int handle;
+};
+
+ID_INLINE rvmRenderEntity::rvmRenderEntity() {
+	handle = -1;
+	memset(&re, 0, sizeof(renderEntity_t));
+}
+
+ID_INLINE void rvmRenderEntity::Update() {
+
+	if (handle == -1)
+	{
+		handle = common->RW()->AddEntityDef(&re);
+	}
+	else
+	{
+		common->RW()->UpdateEntityDef(handle, &re);
+	}
+}
+// jmarshall end
+
 #endif /* !__RENDERWORLD_H__ */

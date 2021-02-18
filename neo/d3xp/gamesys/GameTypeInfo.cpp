@@ -5486,6 +5486,10 @@ intptr_t idPlayer::Invoke(const char *functionName, void *param1) {
 	if(functionNameHash == 165154) { // GetPrevWeapon
 		return (intptr_t)GetPrevWeapon();
 	};
+	if(functionNameHash == 165871) { // RenderCockpit
+		RenderCockpit();
+		return 0;
+	};
 	if(functionNameHash == 127156) { // StopFiring
 		StopFiring();
 		return 0;
@@ -5977,6 +5981,9 @@ bool idPlayer::HasNativeFunction(const char *functionName) {
 		return true;
 	};
 	if(functionNameHash == 165154) { // GetPrevWeapon
+		return true;
+	};
+	if(functionNameHash == 165871) { // RenderCockpit
 		return true;
 	};
 	if(functionNameHash == 127156) { // StopFiring

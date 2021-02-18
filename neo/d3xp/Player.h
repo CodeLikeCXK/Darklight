@@ -824,6 +824,7 @@ private:
 	int						landChange;
 	int						landTime;
 
+	void					RenderCockpit(void);
 
 	int						currentWeapon;
 	idPredictedValue< int >	idealWeapon;
@@ -914,7 +915,7 @@ private:
 	int						clientFireCount;
 
 	idRenderModel			*cockpit_model;
-	int						cockpit_model_handle;
+	rvmRenderEntity			cockpit_render_entity;
 
 	idVec3					cockpit_joint_offset;
 
