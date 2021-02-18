@@ -2060,11 +2060,13 @@ deformInfo_t* R_BuildDeformInfo( int numVerts, const idDrawVert* verts, int numI
 	R_IdentifySilEdges( &tri, false );			// we cannot remove coplanar edges, because they can deform to silhouettes
 	R_DuplicateMirroredVertexes( &tri );		// split mirror points into multiple points
 	R_CreateDupVerts( &tri );
-	if( useUnsmoothedTangents )
-	{
-		R_BuildDominantTris( &tri );
-	}
-	R_DeriveTangents( &tri );
+// jmarshall
+	//if( useUnsmoothedTangents )
+	//{
+	//	R_BuildDominantTris( &tri );
+	//}
+	//R_DeriveTangents( &tri );
+// jmarshall end
 
 	deformInfo_t* deform = ( deformInfo_t* )R_ClearedStaticAlloc( sizeof( *deform ) );
 

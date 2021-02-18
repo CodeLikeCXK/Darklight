@@ -822,7 +822,10 @@ void WriteMD5Mesh(const char *dest, idList< BoneDesc > &skeleton, rvmExportMesh*
 						exportedWeights.Append(w);
 					}
 
-					file->WriteFloatString("\tvert %d ( %f %f ) %d %d\n", d, vert->GetTexCoordS(), vert->GetTexCoordT(), startWeight, numWeights);
+					file->WriteFloatString("\tvert %d ( %f %f ) ( %f %f %f ) ( %f %f %f ) %d %d\n", d, vert->GetTexCoordS(), vert->GetTexCoordT(), 
+						vert->GetTangent()[0], vert->GetTangent()[1], vert->GetTangent()[2],
+						vert->GetNormal()[0], vert->GetNormal()[1], vert->GetNormal()[2], 
+						startWeight, numWeights);
 				}
 			//file->WriteFloatString("\t}\n");
 
@@ -879,7 +882,7 @@ ExportMesh
 */
 void ExportMesh(const char *src, const char *dest, idExportOptions &options) {
 	common->Printf("Opening Mesh %s\n", src);
-	aiScene* scene = (aiScene*)aiImportFile(src, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_JoinIdenticalVertices | aiProcess_LimitBoneWeights);
+	aiScene* scene = (aiScene*)aiImportFile(src, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_JoinIdenticalVertices | aiProcess_CalcTangentSpace | aiProcess_LimitBoneWeights);
 	if (scene == nullptr) {
 		common->Warning("ExportMesh: Failed to open mesh %s\n", dest);
 		return;
@@ -921,6 +924,8 @@ void ExportMesh(const char *src, const char *dest, idExportOptions &options) {
 
 		for(int f = 0; f < mesh->mesh->mNumVertices; f++) {
 			mesh->vertexes[f].xyz = idVec3(0, 0, 0);
+			mesh->vertexes[f].SetTangent(idVec3(mesh->mesh->mTangents[f].x, mesh->mesh->mTangents[f].y, mesh->mesh->mTangents[f].z));
+			mesh->vertexes[f].SetNormal(idVec3(mesh->mesh->mNormals[f].x, mesh->mesh->mNormals[f].y, mesh->mesh->mNormals[f].z));
 			mesh->vertexes[f].SetTexCoord(idVec2(mesh->mesh->mTextureCoords[0][f].x, mesh->mesh->mTextureCoords[0][f].y));
 		}
 

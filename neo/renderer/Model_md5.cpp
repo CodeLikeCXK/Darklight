@@ -41,7 +41,7 @@ static const __m128 vector_float_negInfinity		= { -idMath::INFINITY, -idMath::IN
 
 static const char* MD5_SnapshotName = "_MD5_Snapshot_";
 
-static const byte MD5B_VERSION = 106;
+static const byte MD5B_VERSION = 107;
 static const unsigned int MD5B_MAGIC = ( '5' << 24 ) | ( 'D' << 16 ) | ( 'M' << 8 ) | MD5B_VERSION;
 
 idCVar r_useGPUSkinning( "r_useGPUSkinning", "1", CVAR_INTEGER, "animate normals and tangents instead of deriving" );
@@ -144,10 +144,14 @@ void idMD5Mesh::ParseMesh( idLexer& parser, int numJoints, const idJointMat* joi
 
 	this->numVerts = count;
 
+	idList<idVec3> tangents;
+	idList<idVec3> normals;
 	idList<idVec2> texCoords;
 	idList<int> firstWeightForVertex;
 	idList<int> numWeightsForVertex;
 
+	tangents.SetNum(count);
+	normals.SetNum(count);
 	texCoords.SetNum( count );
 	firstWeightForVertex.SetNum( count );
 	numWeightsForVertex.SetNum( count );
@@ -159,7 +163,9 @@ void idMD5Mesh::ParseMesh( idLexer& parser, int numJoints, const idJointMat* joi
 		parser.ExpectTokenString( "vert" );
 		parser.ParseInt();
 
-		parser.Parse1DMatrix( 2, texCoords[ i ].ToFloatPtr() );
+		parser.Parse1DMatrix(2, texCoords[i].ToFloatPtr());
+		parser.Parse1DMatrix(3, tangents[i].ToFloatPtr());
+		parser.Parse1DMatrix(3, normals[i].ToFloatPtr());
 
 		firstWeightForVertex[ i ]	= parser.ParseInt();
 		numWeightsForVertex[ i ]	= parser.ParseInt();
@@ -281,6 +287,8 @@ void idMD5Mesh::ParseMesh( idLexer& parser, int numJoints, const idJointMat* joi
 		basePose[i].Clear();
 		basePose[i].xyz = v;
 		basePose[i].SetTexCoord( texCoords[i] );
+		basePose[i].SetTangent(tangents[i]);
+		basePose[i].SetNormal(normals[i]);		
 	}
 
 	// build the weights and bone indexes into the verts, so they will be duplicated

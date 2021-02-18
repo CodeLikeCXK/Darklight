@@ -42,7 +42,7 @@ If you have questions concerning this license or the applicable additional terms
 #define MD5_MESH_EXT			"md5mesh"
 #define MD5_ANIM_EXT			"md5anim"
 #define MD5_CAMERA_EXT			"md5camera"
-#define MD5_VERSION				10
+#define MD5_VERSION				11
 
 #include "jobs/ShadowShared.h"
 #include "jobs/prelightshadowvolume/PreLightShadowVolume.h"
