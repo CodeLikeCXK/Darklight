@@ -486,27 +486,85 @@ class rvmRenderEntity {
 public:
 	rvmRenderEntity();
 
-	renderEntity_t			re;
+	renderEntity_t			parms;
 	
 	void					Update();
 private:
 	int handle;
 };
 
+class rvmRenderLight {
+public:
+	rvmRenderLight();
+
+	renderLight_t			parms;
+
+	void					SetColor(float red, float green, float blue);
+	idVec3					GetColor(void);
+
+	void					Update();
+private:
+	int handle;
+};
+
+/*
+=====================
+
+rvmRenderLight
+
+=====================
+*/
+ID_INLINE rvmRenderLight::rvmRenderLight() {
+	handle = -1;
+	memset(&parms, 0, sizeof(renderLight_t));
+	parms.axis = mat3_identity;
+	parms.shader = declManager->FindMaterial("lights/defaultPointLight", false);	
+}
+
+ID_INLINE idVec3 rvmRenderLight::GetColor(void) {
+	return idVec3(parms.shaderParms[SHADERPARM_RED], parms.shaderParms[SHADERPARM_GREEN], parms.shaderParms[SHADERPARM_BLUE]);
+}
+
+ID_INLINE void rvmRenderLight::SetColor(float red, float green, float blue) {
+	parms.shaderParms[SHADERPARM_RED] = red;
+	parms.shaderParms[SHADERPARM_GREEN] = green;
+	parms.shaderParms[SHADERPARM_BLUE] = blue;	
+}
+
+ID_INLINE void rvmRenderLight::Update() {
+
+	if (handle == -1)
+	{
+		handle = common->RW()->AddLightDef(&parms);
+	}
+	else
+	{
+		common->RW()->UpdateLightDef(handle, &parms);
+	}
+}
+
+/*
+=====================
+
+rvmRenderEntity
+
+=====================
+*/
+
 ID_INLINE rvmRenderEntity::rvmRenderEntity() {
 	handle = -1;
-	memset(&re, 0, sizeof(renderEntity_t));
+	memset(&parms, 0, sizeof(renderEntity_t));
 }
 
 ID_INLINE void rvmRenderEntity::Update() {
 
 	if (handle == -1)
 	{
-		handle = common->RW()->AddEntityDef(&re);
+		handle = common->RW()->AddEntityDef(&parms);
 	}
 	else
 	{
-		common->RW()->UpdateEntityDef(handle, &re);
+		common->RW()->UpdateEntityDef(handle, &parms);
 	}
 }
 // jmarshall end

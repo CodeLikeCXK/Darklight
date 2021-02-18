@@ -77,25 +77,25 @@ bool ProcessModel( uEntity_t* e, bool floodFill )
 	// RB end
 
 	// see if the bsp is completely enclosed
-	if( floodFill && !dmapGlobals.noFlood )
-	{
-		if( FloodEntities( e->tree ) )
-		{
-			// set the outside leafs to opaque
-			FillOutside( e );
-		}
-		else
-		{
-			common->Printf( "**********************\n" );
-			common->Warning( "******* leaked *******" );
-			common->Printf( "**********************\n" );
-			LeakFile( e->tree );
-			// bail out here.  If someone really wants to
-			// process a map that leaks, they should use
-			// -noFlood
-			return false;
-		}
-	}
+	//if( floodFill && !dmapGlobals.noFlood )
+	//{
+	//	if( FloodEntities( e->tree ) )
+	//	{
+	//		// set the outside leafs to opaque
+	//		FillOutside( e );
+	//	}
+	//	else
+	//	{
+	//		common->Printf( "**********************\n" );
+	//		common->Warning( "******* leaked *******" );
+	//		common->Printf( "**********************\n" );
+	//		LeakFile( e->tree );
+	//		// bail out here.  If someone really wants to
+	//		// process a map that leaks, they should use
+	//		// -noFlood
+	//		return false;
+	//	}
+	//}
 
 	// get minimum convex hulls for each visible side
 	// this must be done before creating area portals,

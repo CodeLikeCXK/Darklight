@@ -5115,6 +5115,7 @@ static classVariableInfo_t idPlayer_typeInfo[] = {
 	{ "int", "clientFireCount", (intptr_t)(&((idPlayer *)0)->clientFireCount), sizeof( ((idPlayer *)0)->clientFireCount ) },
 	{ "idRenderModel *", "cockpit_model", (intptr_t)(&((idPlayer *)0)->cockpit_model), sizeof( ((idPlayer *)0)->cockpit_model ) },
 	{ "rvmRenderEntity", "cockpit_render_entity", (intptr_t)(&((idPlayer *)0)->cockpit_render_entity), sizeof( ((idPlayer *)0)->cockpit_render_entity ) },
+	{ "rvmRenderLight", "cockpit_render_light", (intptr_t)(&((idPlayer *)0)->cockpit_render_light), sizeof( ((idPlayer *)0)->cockpit_render_light ) },
 	{ "idVec3", "cockpit_joint_offset", (intptr_t)(&((idPlayer *)0)->cockpit_joint_offset), sizeof( ((idPlayer *)0)->cockpit_joint_offset ) },
 	{ "idPlayerIcon", "playerIcon", (intptr_t)(&((idPlayer *)0)->playerIcon), sizeof( ((idPlayer *)0)->playerIcon ) },
 	{ "bool", "selfSmooth", (intptr_t)(&((idPlayer *)0)->selfSmooth), sizeof( ((idPlayer *)0)->selfSmooth ) },

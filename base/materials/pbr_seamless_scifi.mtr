@@ -1,0 +1,15 @@
+textures/pbr_seamless_scifi/25_Base_Color
+{
+    qer_editorimage textures/pbr_seamless_scifi/25_Base_Color.tga
+    diffusemap        textures/pbr_seamless_scifi/25_Base_Color.tga
+    bumpmap            textures/pbr_seamless_scifi/25_Normal.tga
+    specularmap        textures/pbr_seamless_scifi/25_Roughness.tga
+}
+
+textures/pbr_seamless_scifi/31_Base_Color
+{
+    qer_editorimage textures/pbr_seamless_scifi/31_Base_Color.tga
+    diffusemap        textures/pbr_seamless_scifi/31_Base_Color.tga
+    bumpmap            textures/pbr_seamless_scifi/31_Normal.tga
+    specularmap        textures/pbr_seamless_scifi/31_Roughness.tga
+}

@@ -2001,17 +2001,17 @@ idPlayer::RenderCockpit
 */
 void idPlayer::RenderCockpit(void) {
 	// also add a highlight shell model
-	cockpit_render_entity.re = renderEntity;
-	cockpit_render_entity.re.axis = viewAngles.ToMat3();
+	cockpit_render_entity.parms = renderEntity;
+	cockpit_render_entity.parms.axis = viewAngles.ToMat3();
 
 	idVec3 offset = cockpit_joint_offset;
 	offset.z = -offset.z;
 
-	cockpit_render_entity.re.origin = firstPersonViewOrigin + (offset * cockpit_render_entity.re.axis);
+	cockpit_render_entity.parms.origin = firstPersonViewOrigin + (offset * cockpit_render_entity.parms.axis);
 
-	cockpit_render_entity.re.hModel = cockpit_model;
-	cockpit_render_entity.re.bounds = cockpit_model->Bounds();
-	cockpit_render_entity.re.skipSuppress = true;
+	cockpit_render_entity.parms.hModel = cockpit_model;
+	cockpit_render_entity.parms.bounds = cockpit_model->Bounds();
+	cockpit_render_entity.parms.skipSuppress = true;
 
 	cockpit_render_entity.Update();
 }
@@ -2025,6 +2025,13 @@ void idPlayer::Present() {
 	idActor::Present();
 
 	RenderCockpit();
+
+	// Render a light in the cockpit
+	cockpit_render_light.parms.origin = cockpit_render_entity.parms.origin;
+	cockpit_render_light.parms.lightRadius = idVec3(500, 500, 500);
+	cockpit_render_light.SetColor(0.0f, 0.5, 0.0f);
+	cockpit_render_light.parms.pointLight = true;
+	cockpit_render_light.Update();
 }
 
 /*

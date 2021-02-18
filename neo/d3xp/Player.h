@@ -916,6 +916,7 @@ private:
 
 	idRenderModel			*cockpit_model;
 	rvmRenderEntity			cockpit_render_entity;
+	rvmRenderLight			cockpit_render_light;
 
 	idVec3					cockpit_joint_offset;
 
