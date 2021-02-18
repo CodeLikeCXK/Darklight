@@ -2028,7 +2028,8 @@ void idPlayer::Present() {
 
 	// Render a light in the cockpit
 	cockpit_render_light.parms.origin = cockpit_render_entity.parms.origin;
-	cockpit_render_light.parms.lightRadius = idVec3(500, 500, 500);
+	cockpit_render_light.parms.lightRadius = idVec3(200, 200, 200);
+	cockpit_render_light.parms.noShadows = true;
 	cockpit_render_light.SetColor(0.0f, 0.5, 0.0f);
 	cockpit_render_light.parms.pointLight = true;
 	cockpit_render_light.Update();
