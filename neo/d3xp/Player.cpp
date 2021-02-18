@@ -61,8 +61,6 @@ idCVar pm_clientInterpolation_Divergence( "pm_clientInterpolation_Divergence", "
 
 idCVar pm_clientAuthoritative_minSpeedSquared( "pm_clientAuthoritative_minSpeedSquared", "1000.0f", CVAR_FLOAT, "" );
 
-idCVar g_cockpitZOffset("g_cockpitZOffset", "47", CVAR_FLOAT, "");
-
 extern idCVar g_demoMode;
 
 /*
@@ -2007,7 +2005,13 @@ void idPlayer::Present() {
 	renderEntity_t	cockpitRenderEntity;
 
 	cockpitRenderEntity = renderEntity;
-	cockpitRenderEntity.origin.z += g_cockpitZOffset.GetFloat();
+	cockpitRenderEntity.axis = viewAngles.ToMat3();
+
+	idVec3 offset = cockpit_joint_offset;
+	offset.z = -offset.z;
+
+	cockpitRenderEntity.origin = firstPersonViewOrigin  + (offset * cockpitRenderEntity.axis);
+
 	cockpitRenderEntity.hModel = cockpit_model;
 	cockpitRenderEntity.bounds = cockpit_model->Bounds();
 	cockpitRenderEntity.skipSuppress = true;
@@ -2049,8 +2053,11 @@ void idPlayer::Spawn()
 		spectating = true;
 	}
 
-	cockpit_model_handle = 1;
 	cockpit_model = renderModelManager->FindModel(spawnArgs.GetString("cockpit_model"));
+	jointHandle_t jointHandle = cockpit_model->GetJointHandle("player_view");
+	cockpit_joint_offset = cockpit_model->GetDefaultPose()[jointHandle].t;
+	cockpit_joint_offset = idVec3(cockpit_joint_offset.z, cockpit_joint_offset.y, cockpit_joint_offset.x);
+	cockpit_model_handle = -1;	
 
 	// set our collision model
 	physicsObj.SetSelf( this );

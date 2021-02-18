@@ -916,6 +916,8 @@ private:
 	idRenderModel			*cockpit_model;
 	int						cockpit_model_handle;
 
+	idVec3					cockpit_joint_offset;
+
 	idPlayerIcon			playerIcon;
 
 	bool					selfSmooth;
