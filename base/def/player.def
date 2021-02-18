@@ -1,3 +1,11 @@
+export justin {
+	mesh models/md5/cockpit/cockpit.fbx -dest models/md5/cockpit/cockpit.md5mesh
+}
+
+model player_cockpit {
+	mesh models/md5/cockpit/cockpit.md5mesh
+}
+
 entityDef player_doommarine {
   "spawnclass"   "idPlayer"
   "scriptobject" "player"

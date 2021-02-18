@@ -344,7 +344,7 @@ void idMD5Mesh::ParseMesh( idLexer& parser, int numJoints, const idJointMat* joi
 		{
 			totalWeight += tempWeights[weights[j]].jointWeight;
 		}
-		assert( totalWeight > 0.999f && totalWeight < 1.001f );
+	//	assert( totalWeight > 0.999f && totalWeight < 1.001f );
 
 		float usedWeight = 0;
 		for( int j = 0; j < usedWeights; j++ )
