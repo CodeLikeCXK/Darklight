@@ -1,17 +1,23 @@
 textures/editor/entityGui
 {
 	qer_editorimage	textures/editor/entityGui.tga
-	guiSurf	entity
+	{
+		map textures/editor/entityGui.tga
+	}
 }
 
 textures/editor/entityGui2
 {
 	qer_editorimage	textures/editor/entityGui2.tga
-	guiSurf	entity2
+	{
+		map textures/editor/entityGui2.tga
+	}
 }
 
 textures/editor/entityGui3
 {
 	qer_editorimage	textures/editor/entityGui3.tga
-	guiSurf	entity3
+	{
+		map textures/editor/entityGui3.tga
+	}
 }
