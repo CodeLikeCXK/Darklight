@@ -778,7 +778,12 @@ void WriteMD5Mesh(const char *dest, idList< BoneDesc > &skeleton, rvmExportMesh*
 	for(int i = 0; i < numMeshes; i++) {
 		file->WriteFloatString("mesh {\n");
 			file->WriteFloatString("\tname \"%s\"\n", meshes[i].mesh->mName.C_Str());
-			file->WriteFloatString("\tshader \"%s\"\n", meshes[i].mtrName.c_str());
+
+			idStr fixedShaderName = meshes[i].mtrName.c_str();
+			fixedShaderName = fixedShaderName.StripFileExtension();
+			fixedShaderName.Replace("..\\", "");
+			fixedShaderName.Replace("\\", "/");
+			file->WriteFloatString("\tshader \"%s\"\n", fixedShaderName.c_str());
 
 			idList<md5ExportWeight_t> exportedWeights;
 

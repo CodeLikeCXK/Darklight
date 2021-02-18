@@ -1,0 +1,17 @@
+textures/editor/entityGui
+{
+	qer_editorimage	textures/editor/entityGui.tga
+	guiSurf	entity
+}
+
+textures/editor/entityGui2
+{
+	qer_editorimage	textures/editor/entityGui2.tga
+	guiSurf	entity2
+}
+
+textures/editor/entityGui3
+{
+	qer_editorimage	textures/editor/entityGui3.tga
+	guiSurf	entity3
+}

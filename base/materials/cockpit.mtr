@@ -1,0 +1,7 @@
+cockpit_d
+{
+    qer_editorimage models/md5/cockpit/cockpit_d.tga
+    diffusemap        models/md5/cockpit/cockpit_d.tga
+    bumpmap            models/md5/cockpit/cockpit_Normal.tga
+    specularmap        models/md5/cockpit/cockpit_Roughness.tga
+}

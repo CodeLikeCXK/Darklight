@@ -914,6 +914,7 @@ private:
 	int						serverOverridePositionTime;
 	int						clientFireCount;
 
+	idUserInterface*		cockpit_gui_test;
 	idRenderModel			*cockpit_model;
 	rvmRenderEntity			cockpit_render_entity;
 	rvmRenderLight			cockpit_render_light;

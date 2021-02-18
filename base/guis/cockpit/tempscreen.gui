@@ -1,0 +1,19 @@
+windowDef Desktop
+{
+	text	""
+	rect	0 ,0 ,640 ,480
+	visible	1
+	textscale	4
+	nocursor	1
+	
+	
+	windowDef Text1
+	{
+		rect	310 ,145 ,1 ,130
+		textscale	0.30
+		textalign	0
+		text	"TEST DATA"
+		visible	1
+		forecolor	1 ,0.9 ,0.5 ,0
+	}
+}

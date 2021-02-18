@@ -2011,7 +2011,13 @@ void idPlayer::RenderCockpit(void) {
 
 	cockpit_render_entity.parms.hModel = cockpit_model;
 	cockpit_render_entity.parms.bounds = cockpit_model->Bounds();
+	
 	cockpit_render_entity.parms.skipSuppress = true;
+	cockpit_render_entity.parms.modelDepthHack = true;
+
+	cockpit_render_entity.parms.gui[0] = cockpit_gui_test;
+	cockpit_render_entity.parms.gui[1] = cockpit_gui_test;
+	cockpit_render_entity.parms.gui[2] = cockpit_gui_test;
 
 	cockpit_render_entity.Update();
 }
@@ -2061,6 +2067,8 @@ void idPlayer::Spawn()
 		// do this before SetClipModel to get the right bounding box
 		spectating = true;
 	}
+
+	cockpit_gui_test = uiManager->FindGui("guis/cockpit/tempscreen.gui", true, false, true);
 
 	cockpit_model = renderModelManager->FindModel(spawnArgs.GetString("cockpit_model"));
 	jointHandle_t jointHandle = cockpit_model->GetJointHandle("player_view");
