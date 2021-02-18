@@ -827,7 +827,7 @@ void WriteMD5Mesh(const char *dest, idList< BoneDesc > &skeleton, rvmExportMesh*
 						exportedWeights.Append(w);
 					}
 
-					file->WriteFloatString("\tvert %d ( %f %f ) ( %f %f %f ) ( %f %f %f ) %d %d\n", d, vert->GetTexCoordS(), vert->GetTexCoordT(), 
+					file->WriteFloatString("\tvert %d ( %f %f ) ( %f %f %f ) ( %f %f %f ) %d %d\n", d, vert->GetTexCoordS(), 1.0 - vert->GetTexCoordT(), 
 						vert->GetTangent()[0], vert->GetTangent()[1], vert->GetTangent()[2],
 						vert->GetNormal()[0], vert->GetNormal()[1], vert->GetNormal()[2], 
 						startWeight, numWeights);
