@@ -5617,13 +5617,19 @@ void idEntity::Event_CallFunction( const char* funcname )
 		gameLocal.Error( "Event 'callFunction' called from outside thread" );
 		return;
 	}
-
+// jmarshall
 	func = scriptObject.GetFunction( funcname );
 	if( func == NULL )
 	{
+		if (HasNativeFunction(funcname))
+		{
+			Invoke(funcname, NULL);
+			return;
+		}
 		gameLocal.Error( "Unknown function '%s' in '%s'", funcname, scriptObject.GetTypeName() );
 		return;
 	}
+// jmarshall end
 
 	if( func->type->NumParameters() != 1 )
 	{

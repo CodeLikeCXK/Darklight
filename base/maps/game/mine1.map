@@ -74,6 +74,7 @@
 {
 "classname" "light"
 "origin" "-72 168 152"
+"style" "5"
 }
 // entity 4
 {
@@ -84,4 +85,5 @@
 {
 "classname" "light"
 "origin" "-88 -392 152"
+"style" "9"
 }

@@ -1250,6 +1250,8 @@ void idGameLocal::ClientRunFrame( idUserCmdMgr& cmdMgr, bool lastPredictFrame, g
 		}
 	}
 
+	RunSharedThink();
+
 	// service any pending events
 	idEvent::ServiceEvents();
 

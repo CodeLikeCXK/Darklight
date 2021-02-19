@@ -34,4 +34,24 @@ entityDef light {
 	"start_off"					"0"
 	"count"						"1"
 	"break"						"0"
+	
+	"style"						"0"
+	
+	"ls_frametime"				"100"
+	
+	"num_styles"				"12"
+		
+	"light_style0" 				"m"
+	"light_style1" 				"mmnmmommommnonmmonqnmmo"
+	"light_style2" 				"abcdefghijklmnopqrstuvwxyzyxwvutsrqponmlkjihgfedcba"
+	"light_style3"				"mmmmmaaaaammmmmaaaaaabcdefgabcdefg"
+	"light_style4"				"mamamamamama"
+	"light_style5"				"jklmnopqrstuvwxyzyxwvutsrqponmlkj"
+	"light_style6"				"nmonqnmomnmomomno"
+	"light_style7"				"mmmaaaabcdefgmmmmaaaammmaamm"
+	"light_style8"				"mmmaaammmaaammmabcdefaaaammmmabcdefmmmaaaa"
+	"light_style9"				"aaaaaaaazzzzzzzz"
+	"light_style10"				"mmamammmmammamamaaamammma"
+	"light_style11"				"abcdefghijklmnopqrrqponmlkjihgfedcba"	
 }
+
