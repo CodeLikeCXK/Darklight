@@ -35,7 +35,7 @@ entityDef light {
 	"count"						"1"
 	"break"						"0"
 	
-	"style"						"0"
+	"style"						"-1"
 	
 	"ls_frametime"				"100"
 	
